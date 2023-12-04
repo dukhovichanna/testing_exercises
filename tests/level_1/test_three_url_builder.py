@@ -7,6 +7,6 @@ from functions.level_1.three_url_builder import build_url
     pytest.param("https://example.com", "", {"param": "value"}, "https://example.com/?param=value", id="build_url_with_empty_relative_url"),
     pytest.param("https://example.com", "path/to/resource", {"empty_param": ""}, "https://example.com/path/to/resource?empty_param=", id="build_url_with_empty_param_value")
 ])
-def test_build_url(host_name, relative_url, get_params, expected):
+def test__build_url(host_name, relative_url, get_params, expected):
     result = build_url(host_name, relative_url, get_params)
     assert result == expected

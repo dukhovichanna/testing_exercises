@@ -9,7 +9,7 @@ from functions.level_1.one_gender import genderalize
             pytest.param('учился', 'училась', 'female', 'училась', id='return_true_when_female_gender')
         ]
 )
-def test_genderalize(verb_male, verb_female, gender, expected_result):
+def test__genderalize(verb_male, verb_female, gender, expected_result):
     result = genderalize(verb_male, verb_female, gender)
 
     assert result is expected_result
