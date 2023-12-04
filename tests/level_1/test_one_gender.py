@@ -16,13 +16,3 @@ def test_genderalize(verb_male, verb_female, gender, expected_result):
         assert result is not expected_result
     else:
         assert result is expected_result
-
-@pytest.mark.parametrize(
-        'verb_male, verb_female, gender, expected_result',
-        [
-
-            ('учился', 'училась', 'blah', 'учился')
-        ]
-)
-def test_genderalize_false(verb_male, verb_female, gender, expected_result):
-    assert genderalize(verb_male, verb_female, gender) is not expected_result
