@@ -1,13 +1,17 @@
+import pytest
+from freezegun import freeze_time
 from functions.level_1.two_date_parser import compose_datetime_from
 import datetime
 
+@freeze_time("2023-12-4 12:30:00")
+@pytest.mark.parametrize(
+        "date_str, time_str, expected_result",
+        [
+            ("today", "12:30", datetime.datetime(2023, 12, 4, 12, 30)),
+            ("tomorrow", "15:45", datetime.datetime(2023, 12, 5, 15, 45))
+        ]
+)
+def test__compose_datetime_from(date_str, time_str, expected_result):
+    result = compose_datetime_from(date_str, time_str)
 
-def test_compose_datetime_from():
-    result = compose_datetime_from("today", "12:30")
-    expected = datetime.datetime.now().replace(hour=12, minute=30, second=0, microsecond=0)
-    assert result == expected
-
-    result = compose_datetime_from("tomorrow", "15:45")
-    tomorrow = datetime.date.today() + datetime.timedelta(days=1)
-    expected = datetime.datetime(tomorrow.year, tomorrow.month, tomorrow.day, 15, 45)
-    assert result == expected
+    assert result == expected_result
