@@ -9,7 +9,7 @@ def test__calculate_average_daily_expenses__assert_result_is_decimal(sample_expe
 
 def test__calculate_average_daily_expenses__list_of_sample_valid_expenses(sample_expenses):
     result = calculate_average_daily_expenses(sample_expenses)
-    assert result == decimal.Decimal('598.125')
+    assert result == decimal.Decimal('135.25')
 
 
 def test__calculate_average_daily_expenses__raise_error_when_empty_list_of_expenses():

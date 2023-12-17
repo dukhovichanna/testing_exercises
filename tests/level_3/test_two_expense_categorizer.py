@@ -2,26 +2,23 @@ import pytest
 from functions.level_3.two_expense_categorizer import guess_expense_category, is_string_contains_trigger
 from functions.level_3.models import ExpenseCategory
 
-def test__guess_expense_category__successful_detection(sample_expense_with_trigger):
+def test__guess_expense_category__successful_category_detection(sample_expense_with_trigger):
     result = guess_expense_category(sample_expense_with_trigger)
     assert result == ExpenseCategory.THEATRES_MOVIES_CULTURE
 
-def test__guess_expense_category__no_trigger_detected(sample_expense_without_trigger):
+def test__guess_expense_category__return_none_when_no_trigger_detected(sample_expense_without_trigger):
     result = guess_expense_category(sample_expense_without_trigger)
     assert result is None
 
-def test__is_string_contains_trigger__starts_with(sample_expense_with_trigger):
-    result = is_string_contains_trigger(sample_expense_with_trigger.spent_in, "moscow")
-    assert result is True
-
-def test__is_string_contains_trigger__ends_with(sample_expense_with_trigger):
-    result = is_string_contains_trigger(sample_expense_with_trigger.spent_in, "cinema")
-    assert result is True
-
-def test__is_string_contains_trigger__in_middle(sample_expense_with_trigger):
-    result = is_string_contains_trigger(sample_expense_with_trigger.spent_in, "cinema")
-    assert result is True
-
-def test__is_string_contains_trigger__not_present(sample_expense_without_trigger):
-    result = is_string_contains_trigger(sample_expense_without_trigger.spent_in, "cinema")
-    assert result is False
+@pytest.mark.parametrize("input_string, trigger, expected_result", [
+    ("Moscow Cinema", "cinema", True),
+    ("Random Store", "cinema", False),
+    ("Cinema", "cinema", True),
+    ("Cinema.", "cinema", True),
+    ("Cinema-Gallery", "cinema", True),
+    ("Cinema / Gallery", "cinema", True),
+    ("Grocery Store", "cinema", False),
+])
+def test__is_string_contains_trigger(input_string, trigger, expected_result):
+    result = is_string_contains_trigger(input_string, trigger)
+    assert result == expected_result
