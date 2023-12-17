@@ -1,6 +1,6 @@
 import pytest
 import decimal
-from datetime import datetime, timedelta
+from datetime import timedelta
 from functions.level_3.models import Expense
 from functions.level_3.three_is_subscription import is_subscription
 

@@ -1,6 +1,6 @@
 import pytest
 import decimal
-from datetime import datetime, timedelta
+from datetime import timedelta
 from functions.level_3.models import Expense
 from functions.level_3.four_fraud import find_fraud_expenses
 
