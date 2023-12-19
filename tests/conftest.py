@@ -13,6 +13,10 @@ def spent_at_date():
     return datetime.datetime(2023, 11, 23, 15, 29)
 
 @pytest.fixture
+def subscription_amount():
+    return decimal.Decimal('20.50')
+
+@pytest.fixture
 def sample_expense_with_trigger(spent_at_date, sample_bank_card):
     return Expense(
         amount=decimal.Decimal('20.50'),
@@ -45,7 +49,7 @@ def sample_expenses(sample_expense_with_trigger, sample_expense_without_trigger)
 @pytest.fixture
 def sample_expenses_for_subscription_check(sample_expenses):
     extra_expense_1 = Expense(
-        amount=decimal.Decimal('20.50'),
+        amount=subscription_amount,
         currency='USD',
         card=sample_expenses[0].card,
         spent_in=sample_expenses[0].spent_in,
@@ -54,7 +58,7 @@ def sample_expenses_for_subscription_check(sample_expenses):
     )
     
     extra_expense_2 = Expense(
-        amount=decimal.Decimal('20.50'),
+        amount=subscription_amount,
         currency='USD',
         card=sample_expenses[0].card,
         spent_in=sample_expenses[0].spent_in,
@@ -63,7 +67,7 @@ def sample_expenses_for_subscription_check(sample_expenses):
     )
 
     extra_expense_3 = Expense(
-        amount=decimal.Decimal('20.50'),
+        amount=subscription_amount,
         currency='USD',
         card=sample_expenses[0].card,
         spent_in=sample_expenses[0].spent_in,
