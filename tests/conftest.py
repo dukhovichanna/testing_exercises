@@ -78,32 +78,8 @@ def sample_expenses_for_subscription_check(sample_expenses):
     return [extra_expense_1, extra_expense_2, extra_expense_3]
 
 @pytest.fixture
-def sample_expenses_for_fraud_check(sample_expense_with_trigger):
-    fraud_expense_1 = Expense(
-        amount=decimal.Decimal('3000.00'),
-        currency='USD',
-        card=sample_expense_with_trigger.card,
-        spent_in='Fraudville',
-        spent_at=spent_at_date,
-        category=None
-    )
-
-    fraud_expense_2 = Expense(
-        amount=decimal.Decimal('4000.00'),
-        currency='USD',
-        card=sample_expense_with_trigger.card,
-        spent_in='Fraudville',
-        spent_at=spent_at_date + datetime.timedelta(days=1),
-        category=None
-    )
-
-    normal_expense = Expense(
-        amount=decimal.Decimal('50.00'),
-        currency='USD',
-        card=sample_expense_with_trigger.card,
-        spent_in='Legit Store',
-        spent_at=spent_at_date,
-        category=None
-    )
-
-    return [fraud_expense_1, fraud_expense_2, normal_expense]
+def sample_expenses_for_fraud_check(sample_expense_with_trigger, sample_expense_without_trigger):
+    fraud_expenses = [sample_expense_with_trigger] * 3
+    normal_expense = sample_expense_without_trigger
+    
+    return fraud_expenses + [normal_expense]
