@@ -1,7 +1,8 @@
 import datetime
+from dateutil.relativedelta import relativedelta
 import decimal
 import pytest
-from functions.level_3.models import Expense, Currency, BankCard, ExpenseCategory
+from functions.level_3.models import Expense, BankCard
 
 @pytest.fixture
 def sample_bank_card():
@@ -44,28 +45,36 @@ def sample_expenses(sample_expense_with_trigger, sample_expense_without_trigger)
 @pytest.fixture
 def sample_expenses_for_subscription_check(sample_expenses):
     extra_expense_1 = Expense(
-        amount=decimal.Decimal('30.00'),
+        amount=decimal.Decimal('20.50'),
         currency='USD',
         card=sample_expenses[0].card,
         spent_in=sample_expenses[0].spent_in,
-        spent_at=sample_expenses[0].spent_at + datetime.timedelta(days=2),
+        spent_at=sample_expenses[0].spent_at + relativedelta(month=+1),
         category=None
     )
     
     extra_expense_2 = Expense(
-        amount=decimal.Decimal('25.00'),
+        amount=decimal.Decimal('20.50'),
         currency='USD',
         card=sample_expenses[0].card,
         spent_in=sample_expenses[0].spent_in,
-        spent_at=sample_expenses[0].spent_at + datetime.timedelta(days=3),
+        spent_at=sample_expenses[0].spent_at + relativedelta(month=+2),
         category=None
     )
 
-    return sample_expenses + [extra_expense_1, extra_expense_2]
+    extra_expense_3 = Expense(
+        amount=decimal.Decimal('20.50'),
+        currency='USD',
+        card=sample_expenses[0].card,
+        spent_in=sample_expenses[0].spent_in,
+        spent_at=sample_expenses[0].spent_at + relativedelta(month=+3),
+        category=None
+    )
+
+    return [extra_expense_1, extra_expense_2, extra_expense_3]
 
 @pytest.fixture
-def sample_expenses_for_fraud_check():
-    # Create sample expenses with potential fraud signs
+def sample_expenses_for_fraud_check(sample_expense_with_trigger):
     fraud_expense_1 = Expense(
         amount=decimal.Decimal('3000.00'),
         currency='USD',
@@ -80,7 +89,7 @@ def sample_expenses_for_fraud_check():
         currency='USD',
         card=sample_expense_with_trigger.card,
         spent_in='Fraudville',
-        spent_at=spent_at_date + timedelta(days=1),
+        spent_at=spent_at_date + datetime.timedelta(days=1),
         category=None
     )
 
