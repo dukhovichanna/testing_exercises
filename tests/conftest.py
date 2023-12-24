@@ -3,6 +3,7 @@ from dateutil.relativedelta import relativedelta
 import decimal
 import pytest
 from functions.level_3.models import Expense, BankCard
+from functions.level_4.two_students import Student
 
 @pytest.fixture
 def sample_bank_card():
@@ -83,3 +84,12 @@ def sample_expenses_for_fraud_check(sample_expense_with_trigger, sample_expense_
     normal_expense = sample_expense_without_trigger
     
     return fraud_expenses + [normal_expense]
+
+
+@pytest.fixture
+def sample_students():
+    return [
+        Student("John", "Doe", "@john_doe"),
+        Student("Jane", "Smith", None),
+        Student("Alice", "Johnson", "@alice_j"),
+    ]
