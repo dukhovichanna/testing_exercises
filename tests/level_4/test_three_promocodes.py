@@ -1,5 +1,3 @@
-import string
-import pytest
 from functions.level_4.three_promocodes import generate_promocode
 
 def test__generate_promocode__return_true_if_default_length_is_8():

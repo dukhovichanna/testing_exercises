@@ -2,6 +2,7 @@ import datetime
 from dateutil.relativedelta import relativedelta
 import decimal
 import pytest
+import os
 from functions.level_3.models import Expense, BankCard
 from functions.level_4.two_students import Student
 
@@ -93,3 +94,34 @@ def sample_students():
         Student("Jane", "Smith", None),
         Student("Alice", "Johnson", "@alice_j"),
     ]
+
+
+@pytest.fixture
+def temp_file_with_content():
+    content = "Line 1\n# Comment\nLine 2\nLine 3"
+    file_path = "temp_file.txt"
+    with open(file_path, "w") as file:
+        file.write(content)
+
+    yield file_path
+
+    if os.path.exists(file_path):
+        os.remove(file_path)
+
+@pytest.fixture
+def temp_config():
+    temp_config_content = "[tool:app-config]\n" \
+                          "extra_fields = \n" \
+                          "    key1: 'value1'\n" \
+                          "    key2: 42\n" \
+                          "other_field1 = 'value2'\n" \
+                          "other_field2 = 3.14"
+
+    temp_config_path = "temp_config.cfg"
+    with open(temp_config_path, "w") as f:
+        f.write(temp_config_content)
+
+    yield temp_config_path
+
+    if os.path.exists(temp_config_path):
+        os.remove(temp_config_path)

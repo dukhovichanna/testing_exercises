@@ -1,4 +1,3 @@
-import pytest
 from functions.level_4.two_students import Student, get_student_by_tg_nickname
 
 def test__get_student_by_tg_nickname__return_user_when_valid_id_provided(sample_students):
